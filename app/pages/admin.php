@@ -5,11 +5,21 @@
 
   $section = $url[1] ?? 'dashboard';
   $action = $url[2] ?? 'view';
+  $id = $url[3] ?? 0;
 
   $filename = "../app/pages/admin/" . $section . ".php";
   if(!file_exists($filename)) {
     $filename = "../app/pages/admin/404.php";
   }
+
+  if($section == 'users') {
+    require_once "../app/pages/controllers/users.controller.php";
+  } else if($section == 'categories') {
+    require_once "../app/pages/controllers/categories.controller.php";
+  } else if($section == 'posts') {
+    require_once "../app/pages/controllers/posts.controller.php";
+  }
+  
 ?>
 
 <!doctype html>
@@ -101,25 +111,25 @@
       <div class="position-sticky pt-3 sidebar-sticky">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="<?=ROOT?>/admin">
+            <a class="nav-link <?=($section == 'dashboard') ? 'active' : ''?>" aria-current="page" href="<?=ROOT?>/admin">
               <i class="bi bi-speedometer"></i>
               Dashboard
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="<?=ROOT?>/admin/users">
+            <a class="nav-link <?=($section == 'users') ? 'active' : ''?>" aria-current="page" href="<?=ROOT?>/admin/users">
               <i class="bi bi-person"></i>
               Users
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="<?=ROOT?>/admin/categories">
+            <a class="nav-link <?=($section == 'categories') ? 'active' : ''?>" aria-current="page" href="<?=ROOT?>/admin/categories">
               <i class="bi bi-tags"></i>
               Categories
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="<?=ROOT?>/admin/posts">
+            <a class="nav-link <?=($section == 'posts') ? 'active' : ''?>" aria-current="page" href="<?=ROOT?>/admin/posts">
               <i class="bi bi-file-post"></i>
               Posts
             </a>
@@ -166,6 +176,5 @@
 
 
     <script src="<?=ROOT?>/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="<?=ROOT?>/assets/js/dashboard.js"></script>
   </body>
 </html>

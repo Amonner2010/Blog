@@ -11,6 +11,9 @@
     $page_name = trim($url[0]);
     $filename = "../app/pages/" . $page_name . ".php";
 
+    // --- Pagination --- //
+    $PAGE = get_pagination_vars();
+
     // --- Check file exists? --- //
     if(file_exists($filename)) {
         require_once $filename;

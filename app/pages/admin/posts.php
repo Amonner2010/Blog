@@ -1,14 +1,14 @@
 <?php if($action == 'add'):?>
-    <?php include "categories/categories.add.php"; ?>
+    <?php include "posts/posts.add.php"; ?>
 <?php elseif($action == 'edit'):?>
-    <?php include "categories/categories.edit.php"; ?>
+    <?php include "posts/posts.edit.php"; ?>
 <?php elseif($action == 'delete'):?>
-    <?php include "categories/categories.delete.php"; ?>
+    <?php include "posts/posts.delete.php"; ?>
 <?php else:?>
     <h4>
-        Categories
-        <a href="<?=ROOT?>/admin/categories/add">
-            <button class="btn btn-primary">Add Category</button>
+        Posts
+        <a href="<?=ROOT?>/admin/posts/add">
+            <button class="btn btn-primary">Add Post</button>
         </a>
     </h4>
 
@@ -16,9 +16,10 @@
         <table class="table">
             <tr>
                 <th>#</th>
-                <th>Category</th>
+                <th>Title</th>
                 <th>Slug</th>
-                <th>Active</th>
+                <th>Image</th>
+                <th>Date</th>
                 <th>Action</th>
             </tr>
 
@@ -26,7 +27,7 @@
                 $limit = 10;
                 $offset = ($PAGE['page_number'] - 1) * $limit;
 
-                $query = "select * from categories order by id desc limit $limit offset $offset";
+                $query = "select * from posts order by id desc limit $limit offset $offset";
                 $rows = query($query);
             ?>
 
@@ -34,15 +35,18 @@
                 <?php foreach($rows as $row):?>
                     <tr>
                         <td><?=$row['id']?></td>
-                        <td><?=esc($row['category'])?></td>
+                        <td><?=esc($row['title'])?></td>
                         <td><?=$row['slug']?></td>
-                        <td><?=$row['disabled'] ? 'No' : 'Yes'?></td>
                         <td>
-                            <a href="<?=ROOT?>/admin/categories/edit/<?=$row['id']?>">
+                            <img src="<?=get_image($row['image'])?>" style="height: 100px; object-fit: cover; width: 100px;"/>
+                        </td>
+                        <td><?=date("jS M, Y", strtotime($row['date']))?></td>
+                        <td>
+                            <a href="<?=ROOT?>/admin/posts/edit/<?=$row['id']?>">
                                 <button class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></button>
                             </a>
 
-                            <a href="<?=ROOT?>/admin/categories/delete/<?=$row['id']?>">
+                            <a href="<?=ROOT?>/admin/posts/delete/<?=$row['id']?>">
                                 <button class="btn btn-danger btn-sm"><i class="bi bi-trash-fill"></i></button>
                             </a>
                         </td>
